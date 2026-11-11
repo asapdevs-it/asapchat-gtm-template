@@ -256,7 +256,7 @@ Ryzyko: galeria może odrzucić zgłoszenie. Poprawiamy wtedy według uwag z mai
 ## 13. Otwarte pytania (nie blokują kodu)
 
 1. Adres dokumentacji w `metadata.yaml`. Na start adres repo. Gdy powstanie strona z instrukcją na asapchat.io, podmieniamy.
-2. Adres wsparcia do README: podaje właściciel repo (`ONBOARDING-DEV.md`, punkt 7). Do tego czasu w README jest wiersz `TODO(support address)`, który zadanie 07 musi usunąć.
+2. Adres wsparcia do README: zgłoszenia w tym repo, https://github.com/asapdevs-it/asapchat-gtm-template/issues .
 
 ## Zadania
 
@@ -317,7 +317,7 @@ Etykiety: `documentation`, `skip-qa`, `priority-medium`, `risk-low`.
 - README mówi, skąd wziąć Shop ID i Widget token (panel AsapChat: shop settings > Plugin) i że wygląd zmienia się w panelu, z opóźnieniem do 5 minut.
 - README mówi, że czat pojawia się tylko na domenie ustawionej jako adres sklepu w panelu AsapChat.
 - README ma sekcję o opóźnieniu i wykluczeniach z punktu 7.
-- Sekcja „Support” ma adres wsparcia od właściciela repo albo wiersz `TODO(support address)`, gdy adresu jeszcze nie ma.
+- Sekcja „Support” prowadzi do zgłoszeń repo: https://github.com/asapdevs-it/asapchat-gtm-template/issues .
 - Obecny polski README dla deweloperów jest przeniesiony do `docs/README-dev.md`, a `ONBOARDING-DEV.md` i `AGENTS.md` wskazują ten plik.
 
 ### 07 Zgłoszenie do galerii
@@ -325,7 +325,6 @@ Etykiety: `documentation`, `skip-qa`, `priority-medium`, `risk-low`.
 Etykiety: `feature`, `skip-qa`, `priority-medium`, `risk-medium`.
 
 - `metadata.yaml` ma pełny `sha` commita z `main`, w którym `template.tpl` ma zgłaszaną treść (osobny jednolinijkowy PR po merge'u ostatniej zmiany szablonu).
-- W `README.md` nie ma wiersza `TODO(support address)`.
 - Checklisty z `docs/marketplace-listing.md`, punkty 3 i 4, są odhaczone w issue.
 - Pliki i historia commitów są przejrzane: bez tokenów, bez danych klientów, bez treści wewnętrznych.
 - Issue jest przypisane do `prz10` z komentarzem „ready for owner”. Na tym kończy się praca dewelopera.

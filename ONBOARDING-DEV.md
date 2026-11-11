@@ -60,6 +60,4 @@ W pozostałych sprawach decyduje spec. Gdy spec milczy, wybierz prostsze rozwią
 
 ## 7. Od właściciela repo potrzebujesz
 
-Jedna rzecz, nie blokuje zadań 01 do 05:
-
-- Adres wsparcia do sekcji „Support” w README (zadanie 06 zostawia tam wiersz `TODO(support address)`, zadanie 07 nie może być zamknięte, dopóki wiersz istnieje). Poproś o niego pierwszego dnia w issue przypisanym do `prz10`.
+Nic przed zadaniem 07. Zgłoszenie do galerii idzie z nowego konta Google wydawcy (AsapCommerce): gdy zadanie 07 jest gotowe, przypisz issue do `prz10` z komentarzem „ready for owner” i daj mu znać. Konto i samo zgłoszenie są po jego stronie (`docs/accounts.md`, punkt 4).

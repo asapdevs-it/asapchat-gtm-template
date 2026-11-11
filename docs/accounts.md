@@ -26,7 +26,7 @@ To repo jest publiczne. Loginów, haseł, adresów e-mail kont ani identyfikator
 
 ## 4. Zgłoszenie do galerii
 
-Zgłoszenie wysyła się z konta Google wydawcy (AsapCommerce), według `docs/marketplace-listing.md`, punkt 6. Na to konto przychodzą maile z przeglądu. Dane tego konta nie są w repo i deweloper ich nie dostaje.
+Zgłoszenie wysyła się z nowego konta Google wydawcy (AsapCommerce), zakładanego na potrzeby tego szablonu, według `docs/marketplace-listing.md`, punkt 6. Na to konto przychodzą maile z przeglądu. Dane tego konta nie są w repo i deweloper ich nie dostaje.
 
 Podział pracy: deweloper wykonuje kroki 1 i 2 z punktu 6, odhacza checklisty w issue zadania 07 i przypisuje issue do `prz10` z komentarzem „ready for owner”. Krok 3 (logowanie kontem wydawcy i wysłanie adresu repo) wykonuje właściciel repo (`prz10`) i wpisuje datę zgłoszenia w issue.
 

@@ -73,10 +73,10 @@ Terms: https://asapchat.io/regulamin
 
 ## Support
 
-TODO(support address)
+Questions and bug reports: https://github.com/asapdevs-it/asapchat-gtm-template/issues
 ```
 
-Adres wsparcia podaje właściciel repo, `prz10` (`ONBOARDING-DEV.md`, punkt 7). Zadanie 06 zostawia wiersz `TODO(support address)`, jeśli adresu jeszcze nie ma. Zadanie 07 nie może być zamknięte, dopóki ten wiersz istnieje.
+Wsparcie idzie przez zgłoszenia w tym repo (publiczne).
 
 ## 3. Pliki wymagane w katalogu głównym repo
 
@@ -90,7 +90,6 @@ Adres wsparcia podaje właściciel repo, `prz10` (`ONBOARDING-DEV.md`, punkt 7).
 - [ ] Repo `asapdevs-it/asapchat-gtm-template` jest publiczne, gałąź domyślna `main`.
 - [ ] Jedno repo = jeden szablon.
 - [ ] `sha` w `metadata.yaml` to pełny sha commita z `main`, w którym `template.tpl` ma zgłaszaną treść (zasada: `AGENTS.md`, reguła 6).
-- [ ] W `README.md` nie ma wiersza `TODO(support address)`.
 - [ ] Jedno uprawnienie: `inject_script` dla `https://panel.asapchat.io/api/w/*`.
 - [ ] Sam szablon nie zbiera danych osobowych.
 - [ ] Nazwa i opis nie wprowadzają w błąd, brak cudzych marek.
