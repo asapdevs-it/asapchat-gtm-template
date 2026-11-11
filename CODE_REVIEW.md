@@ -1,48 +1,40 @@
-# Zasady code review (wtyczki AsapChat)
+# Zasady code review (szablon GTM AsapChat)
 
-Plik czyta automatycznie `om-code-review`. Bramka walidacji: `.ai/agentic.config.json` (`validation.commands`). Zasady platformy: `AGENTS.md`. Kontrakt z backendem: `docs/CONNECT-API.md`.
+Plik czyta automatycznie `om-code-review`. Bramka walidacji: `.ai/agentic.config.json` (`validation.commands`). Reguły repo: `AGENTS.md`. Kontrakt loadera: `docs/CONNECT-API.md`.
 
 ## Priorytety
 
-1. **Bezpieczeństwo**: token połączenia, obsługa powrotu z panelu, uprawnienia administratora.
-2. **Sklep klienta nie może ucierpieć**: wtyczka nie spowalnia strony, nie rzuca błędów, nie psuje koszyka.
-3. **Zgodność z regułami katalogu** (WordPress.org, PrestaShop Addons, Shopify, Shoper): odrzucenie kosztuje tygodnie.
-4. **Zakres**: v1 to to, co jest w specu repo. Reszta to osobne issue.
+1. **Strona użytkownika nie może ucierpieć**: tag zawsze kończy się `gtmOnSuccess` albo `gtmOnFailure`, nie blokuje sekwencji w kontenerze.
+2. **Uprawnienia**: jedno, `inject_script` dla `https://panel.asapchat.io/api/w/*`.
+3. **Zgodność z zasadami galerii**: odrzucenie kosztuje tygodnie.
+4. **Zakres**: v1 to to, co jest w specu. Reszta to osobne issue.
 5. Styl i uproszczenia.
 
 ## Sprawdzenia
 
-**Token i połączenie**
-- Token połączenia (`ack_…`) nigdy w HTML, JS, logach, komunikatach, odpowiedziach endpointów. Zapis w magazynie konfiguracji platformy, w miarę możliwości zaszyfrowany i nieładowany automatycznie.
-- `state` i `code_verifier` jednorazowe, porównanie odporne na czas, kasowane po użyciu.
-- Obsługa powrotu i każda akcja zapisu: sprawdzenie uprawnień administratora i tokenu anty-CSRF platformy.
-- Brak endpointów diagnostycznych i trybów debug.
+**Szablon**
+- Pola, typy, wartości domyślne i teksty są identyczne z tabelami w specu, punkt 4, znak po znaku, po angielsku.
+- Wartości pól są sprawdzane w definicji pola i drugi raz w kodzie tagu. Token przechodzi przez `encodeUriComponent`.
+- Adres loadera i kolejność flag (`chat`, `search`, `cart`) zgodne ze specem, punkt 5.
+- Brak `access_globals`, `logging` i gwiazdki na cały host.
+- Brak pól wyglądu, opóźnienia i wykluczeń.
 
-**Strona sklepu**
-- Żadnego żądania HTTP do AsapChat podczas renderowania strony sklepu. Konfiguracja tylko z lokalnego zapisu.
-- Skrypty jako prawdziwe znaczniki `<script>` z atrybutami z konfiguracji, każda wartość zakodowana jako atrybut HTML.
-- Brak połączenia, wyłączony przełącznik albo `enabled: false`: zero znaczników w HTML.
-- Błąd 5xx lub timeout przy odświeżaniu nie usuwa działającej konfiguracji; 401, 409 i 410 zatrzymują wstrzykiwanie i pokazują stan „Połącz ponownie”.
+**Repo publiczne**
+- W plikach, commitach, opisie PR i na zrzutach nie ma ID ani tokenu prawdziwego sklepu, adresów e-mail kont, identyfikatorów kontenerów ani treści wewnętrznych. Przykłady: `1284` i `abc123`.
 
-**Zgoda i prywatność**
-- Zero wywołań do AsapChat przed kliknięciem „Połącz” lub zapisaniem klucza.
-- Opis usług zewnętrznych w dokumentacji wtyczki zgodny z tym, co kod naprawdę wysyła.
-
-**Platforma**
-- Dane wejściowe czyszczone, dane wyjściowe kodowane funkcjami platformy.
-- Odinstalowanie usuwa wszystkie zapisane dane i odwołuje połączenie.
-- Teksty przez mechanizm tłumaczeń platformy, polski i angielski.
-- Brak kodu skopiowanego z gałęzi `legacy`.
+**Galeria**
+- `template.tpl`, `metadata.yaml`, `LICENSE` (Apache 2.0) i `README.md` są w katalogu głównym.
+- Zasada `sha` z `AGENTS.md`, reguła 6, jest zachowana.
 
 ## Testy
 
-- Zmiana zachowania ma test. Błąd ma najpierw test, który go odtwarza.
-- Zmiany `risk-high` (połączenie, token, podpisy, webhooki) wymagają testu ścieżki odmowy (zły `state`, brak uprawnień, zły podpis) i drugiej osoby w review.
-- Zmiana ekranu: zrzuty wszystkich stanów (niepołączony, połączony, błąd) na szerokości 390 px i desktop.
+- Zmiana kodu tagu ma test w sekcji `___TESTS___`. Błąd ma najpierw test, który go odtwarza.
+- „Run tests” jest zielone, zrzut jest w PR.
+- Zmiana pól: zrzut formularza na szerokości 390 px i 1280 px.
 
 ## Severity
 
-- **Blocker:** wyciek tokenu, brak sprawdzenia uprawnień lub `state`, żądanie HTTP na stronie sklepu, wywołanie przed zgodą, endpoint debug, sekret w repo, złamana reguła katalogu, kod spoza zakresu v1.
-- **Major:** brak testu zmiany zachowania, brak tłumaczenia, niepełne odinstalowanie, brak obsługi 401/409/410.
+- **Blocker:** szersze uprawnienia, ścieżka kodu bez `gtmOnSuccess`/`gtmOnFailure`, token albo dane klienta w repo, złamana zasada galerii, zmiana spoza zakresu v1.
+- **Major:** brak testu zmiany zachowania, tekst niezgodny ze specem, brak wpisu `versions` po publikacji.
 - **Minor/Nit:** styl, nazewnictwo, drobne uproszczenia (nie blokują).
 - Czerwone CI lub konflikt zbierane razem z pozostałymi uwagami, nie zamiast przeglądu.

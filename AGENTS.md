@@ -1,6 +1,6 @@
 # AGENTS.md: szablon GTM AsapChat
 
-Proces: `SDLC.md`. Zakres: `.ai/specs/2026-11-11-connector-v1.md`. Kontrakt loadera: `docs/CONNECT-API.md`, punkt 6.
+Proces: `SDLC.md`. Zakres: `.ai/specs/2026-11-11-connector-v1.md`. Kontrakt loadera: `docs/CONNECT-API.md`, sekcja „Loader”.
 
 To repo jest publiczne. Każdy plik, commit, issue i PR widzi cały świat.
 
@@ -27,7 +27,7 @@ docs/ .ai/        dokumentacja dla deweloperów (galeria ją ignoruje)
 3. Tag ładuje tylko loader: `https://panel.asapchat.io/api/w/{shopId}.js?t={token}` plus flagi `&chat=0`, `&search=0`, `&cart=0`. Token zawsze przez `encodeUriComponent`.
 4. Zawsze wołaj `data.gtmOnSuccess()` albo `data.gtmOnFailure()`. Tag, który nie kończy, blokuje sekwencje w kontenerze.
 5. Wartości pól waliduj w definicji pól (`NON_EMPTY`, `REGEX`) i drugi raz w kodzie tagu. Błędna wartość w kodzie = `gtmOnFailure`.
-6. Każda zmiana `template.tpl` = nowy wpis w `metadata.yaml` (sha commita, w którym zmienił się szablon).
+6. `metadata.yaml` i `sha`. Merge idzie przez squash, więc sha commita na `main` znasz dopiero po merge'u. Do pierwszego zgłoszenia do galerii lista `versions` ma jeden wpis „Initial release” z tymczasowym sha (40 zer). Prawdziwy sha wpisujesz w zadaniu 07, osobnym jednolinijkowym PR, po merge'u ostatniej zmiany `template.tpl`. Po publikacji w galerii każda zmiana `template.tpl` = nowy wpis na górze `versions`: autor zmiany otwiera po merge'u jednolinijkowy PR z sha commita z `main`.
 7. Sekcja `___TESTS___` musi przechodzić w edytorze („Run tests”) przed PR.
 8. Wszystko, co widzi użytkownik szablonu, jest po angielsku: etykiety pól („Shop ID”, „Widget token”, „Load chat”, „Load AsapSearch”, „Allow add to cart from search”), teksty pomocy, komunikaty błędów, opis szablonu, README. Teksty bierz znak po znaku ze specyfikacji, punkt 4. Dokumenty planistyczne w `docs/` i `.ai/` są po polsku.
 
@@ -36,7 +36,7 @@ docs/ .ai/        dokumentacja dla deweloperów (galeria ją ignoruje)
 Nie ma CLI do uruchomienia szablonu. Przed PR:
 
 ```
-# 1. składnia metadata
+# 1. składnia metadata (wymaga PyYAML: pip install pyyaml; plik powstaje w zadaniu 01, wcześniej ta komenda pada)
 python3 -c "import yaml,sys; yaml.safe_load(open('metadata.yaml'))"
 # 2. ręcznie: import template.tpl do kontenera testowego, Run tests, podgląd na stronie testowej
 ```
@@ -50,4 +50,5 @@ Wynik kroku 2 (zrzut z zielonymi testami i z podglądu) wklej do PR.
 - Dodawać pól wyglądu, opóźnienia albo wykluczeń. Wygląd jest w panelu AsapChat, opóźnienie i wykluczenia w regułach GTM.
 - Wpisywać w szablon, testy, dokumenty, issues albo zrzuty ID lub tokenu prawdziwego sklepu. W przykładach używaj `1284` i `abc123`.
 - Wpisywać do repo haseł, kluczy, danych klientów ani treści wewnętrznych. Na zrzutach zasłoń adresy e-mail i identyfikatory kont.
+- Edytować `docs/CONNECT-API.md` poza zgłoszoną zmianą kontraktu.
 - Obchodzić braków loadera w szablonie. Potrzebna zmiana loadera = issue w tym repo z opisem, czego brakuje.

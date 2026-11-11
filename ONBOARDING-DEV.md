@@ -8,14 +8,14 @@ Szablon tagu Google Tag Manager, który ładuje czat AsapChat i wyszukiwarkę As
 
 ## 2. Kolejność czytania w repo
 
-1. `README.md`
-2. `docs/CONNECT-API.md`: jak wtyczka rozmawia z AsapChat
+1. `README.md` (po zadaniu 06 polski README dla deweloperów leży w `docs/README-dev.md`, a `README.md` jest angielską instrukcją dla użytkowników)
+2. `docs/CONNECT-API.md`: adres loadera, jedyna rzecz, z którą rozmawia szablon
 3. `.ai/specs/2026-11-11-connector-v1.md`: co dokładnie ma powstać
-4. `docs/mockups/*.html`: otwórz w przeglądarce, tak mają wyglądać ekrany
-5. `docs/marketplace-listing.md` i `docs/accounts.md`: wymagania katalogu i konta
+4. `docs/mockups/template.html`: otwórz w przeglądarce, tak wygląda formularz pól w GTM
+5. `docs/marketplace-listing.md` i `docs/accounts.md`: wymagania galerii i konta do testów
 6. `AGENTS.md`, `SDLC.md`, `CODE_REVIEW.md`: zasady pracy
 
-Jeśli `README.md` podaje inną kolejność, obowiązuje ta stąd. `SDLC.md` jest wspólny dla wszystkich repo firmy i opisuje cały proces po angielsku. Wymienia skille (`om-...`), których nie musisz znać na start: wystarczą te z punktu 4. Wzmianki o `BACKWARD_COMPATIBILITY.md` i `.uxproof/` nie dotyczą repo wtyczek.
+Jeśli `README.md` podaje inną kolejność, obowiązuje ta stąd. `SDLC.md` jest wspólny dla wszystkich repo firmy i opisuje cały proces po angielsku. Wymienia skille (`om-...`), których nie musisz znać na start: wystarczą te z punktu 4. Wzmianki o `BACKWARD_COMPATIBILITY.md`, `.uxproof/` i `.ai/skills/` nie dotyczą tego repo.
 
 ## 3. Narzędzia
 
@@ -27,24 +27,39 @@ Jeśli `README.md` podaje inną kolejność, obowiązuje ta stąd. `SDLC.md` jes
 npx skills add https://github.com/open-mercato/skills.git --skill '*'
 ```
 
-4. Sklonuj repo i otwórz w nim agenta. Agent sam czyta `AGENTS.md` i `.ai/agentic.config.json`.
+4. Zainstaluj PyYAML (`pip install pyyaml`): używa go bramka walidacji. Komenda z bramki zaczyna przechodzić po zadaniu 01, bo dopiero ono dodaje `metadata.yaml`.
+5. Sklonuj repo i otwórz w nim agenta. Agent sam czyta `AGENTS.md` i `.ai/agentic.config.json`.
 
 ## 4. Jak wygląda jedno zadanie
 
-1. Wybierz issue o najniższym numerze, które nie ma etykiety `in-progress` ani `blocked`. Issues są ułożone w kolejności wykonania.
-2. Powiedz agentowi: `/om-fix <numer issue>` (małe zadanie) albo `/om-auto-create-pr <numer issue>` (większe). Agent przypisze issue do Ciebie, doda `in-progress`, zrobi gałąź, kod, testy i PR.
-3. Przeczytaj cały diff, zanim poprosisz o review. Agent myli się pewnym tonem. Ty odpowiadasz za kod.
+1. Zadania mają w tytule prefiks `01` do `07`. To jest kolejność wykonania. Numer GitHuba (`#N`) jej nie oznacza. Bierzesz zadanie o najniższym prefiksie, które nie ma etykiety `in-progress` i którego zależności (sekcja „Zależności” w issue) są zamknięte. Gdy dokumenty mówią „zadanie 03”, chodzi o prefiks w tytule.
+2. Powiedz agentowi: `/om-fix <numer GitHuba>` (małe zadanie) albo `/om-auto-create-pr <numer GitHuba>` (większe). Agent przypisze issue do Ciebie, doda `in-progress`, zrobi gałąź, zmiany i PR.
+3. Przeczytaj cały diff, zanim poprosisz o review. Agent myli się pewnym tonem. Ty odpowiadasz za zmianę.
 4. Bramka walidacji (komendy z `.ai/agentic.config.json`) musi przejść lokalnie.
-5. PR do `main`. Review robi drugi deweloper albo `/om-auto-review-pr <numer PR>`.
-6. PR z `needs-qa` czeka na `qa-approved`: ktoś musi przeklikać zmianę w prawdziwym panelu sklepu i dołączyć zrzuty ekranu.
-7. Merge przez squash. Issue zamyka się słowem `zamyka #N` w opisie PR.
+5. PR do `main`. Każdy PR zatwierdza `prz10` (właściciel kodu, wymóg ochrony gałęzi). Wcześniej możesz puścić `/om-auto-review-pr <numer PR>`.
+6. PR z `needs-qa` czeka na `qa-approved`. QA robi drugi deweloper: importuje `template.tpl` z gałęzi PR do swojego kontenera testowego GTM, uruchamia „Run tests”, sprawdza zmianę w podglądzie na stronie testowej i dołącza zrzuty.
+7. Merge przez squash (robi go GitHub, więc commit na `main` jest podpisany). W opisie PR wpisz `Closes #N` z numerem GitHuba: tylko angielskie słowo zamyka issue automatycznie.
 
 ## 5. Zasady, których nie łamiemy
 
-- Zakres v1 to to, co jest w specu. Pomysł na coś więcej: nowe issue, nie dodatkowy kod w PR.
-- Żadnych endpointów diagnostycznych, które coś zwracają bez autoryzacji.
-- Ekrany wtyczki mają logo AsapChat i wygląd panelu AsapChat (tokeny w specu i mockach), nie natywny formularz platformy. Wyjątek: Shopify (Polaris).
-- Teksty dla użytkownika: po polsku forma „Ty”, bez pauz (znaku —), krótko. Wersja angielska obowiązkowa tam, gdzie wymaga jej katalog.
+- Zakres v1 to to, co jest w specu. Pomysł na coś więcej: nowe issue, nie dodatkowa zmiana w PR.
+- Formularz pól rysuje GTM. Nie stylujemy go. Jedyny nasz element graficzny to ikona szablonu.
+- Wszystko, co widzi użytkownik szablonu, jest po angielsku: etykiety, teksty pomocy, komunikaty błędów, opis, README. Teksty bierz znak po znaku ze specu, punkt 4. Bez pauz (znaku —).
+- Repo jest publiczne: żadnych tokenów, danych klientów, adresów e-mail kont ani treści wewnętrznych w plikach, commitach, issues i PR.
 
 ## 6. Kiedy pytać
 
+Pytasz przez issue w tym repo przypisane do `prz10`. Nie czekaj z pytaniem, gdy:
+
+- coś kosztuje (płatne narzędzie, domena, konto),
+- potrzebne jest konto Google wydawcy (wysyłka zgłoszenia do galerii, zadanie 07),
+- dokumenty sobie przeczą (spec, makieta, `docs/marketplace-listing.md`, issue),
+- potrzebna jest zmiana loadera.
+
+W pozostałych sprawach decyduje spec. Gdy spec milczy, wybierz prostsze rozwiązanie i opisz wybór w PR.
+
+## 7. Od właściciela repo potrzebujesz
+
+Jedna rzecz, nie blokuje zadań 01 do 05:
+
+- Adres wsparcia do sekcji „Support” w README (zadanie 06 zostawia tam wiersz `TODO(support address)`, zadanie 07 nie może być zamknięte, dopóki wiersz istnieje). Poproś o niego pierwszego dnia w issue przypisanym do `prz10`.

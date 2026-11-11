@@ -8,7 +8,7 @@ To repo jest publiczne. Nie wpisuj tu tokenów, danych klientów ani niczego wew
 
 ## Co robi wersja 1
 
-1. Użytkownik wpisuje dwa pola: „Shop ID” i „Widget token”. Oba kopiuje z panelu AsapChat: Sklep → Wtyczka.
+1. Użytkownik wpisuje dwa pola: „Shop ID” i „Widget token”. Oba kopiuje z panelu AsapChat: edycja sklepu, link „Wtyczka”.
 2. Zaznacza, co ma się ładować: „Load chat”, „Load AsapSearch” albo oba.
 3. Przy wyszukiwarce może odznaczyć „Allow add to cart from search”.
 4. Tag ładuje jeden plik, loader AsapChat:
@@ -21,7 +21,7 @@ Loader sam dokłada czat i wyszukiwarkę z aktualnymi ustawieniami sklepu. Odzna
 
 Wygląd, nazwę asystenta i powitania zmieniasz w panelu AsapChat. Zmiana jest na stronie po maksymalnie 5 minutach.
 
-Czat pojawia się tylko na domenie ustawionej jako adres sklepu w panelu AsapChat.
+Czat pojawia się tylko na domenie ustawionej jako adres sklepu w panelu AsapChat albo na domenie połączonej wtyczką AsapChat.
 
 ## Czego wersja 1 nie robi
 
@@ -32,13 +32,13 @@ Czat pojawia się tylko na domenie ustawionej jako adres sklepu w panelu AsapCha
 
 ## Zacznij tutaj
 
-1. `ONBOARDING-DEV.md` i `SDLC.md`: narzędzia i proces.
+1. `ONBOARDING-DEV.md` i `SDLC.md`: narzędzia i proces. Kolejność czytania podaje `ONBOARDING-DEV.md`.
 2. `.ai/specs/2026-11-11-connector-v1.md`: specyfikacja i lista issues.
 3. `docs/mockups/template.html`: makieta pól szablonu.
 4. `AGENTS.md`: reguły.
-5. `docs/CONNECT-API.md`, punkt 6: kontrakt loadera.
+5. `docs/CONNECT-API.md`, sekcja „Loader”: kontrakt loadera.
 6. `docs/marketplace-listing.md` i `docs/accounts.md`: zgłoszenie do galerii i konta do testów.
-7. Issues w kolejności ze specyfikacji.
+7. Zadania (issues) w kolejności prefiksu w tytule: `01`, `02`, ... `07`. Numer GitHuba (`#N`) nie oznacza kolejności.
 
 ## Linki
 

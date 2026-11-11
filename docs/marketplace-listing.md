@@ -11,9 +11,9 @@ Wszystkie teksty po angielsku. Galeria jest globalna.
 | Name | AsapChat: AI Chat and Product Search |
 | Description (krótki, widoczny w galerii) | Adds the AsapChat AI chat widget and the AsapSearch product search to your site. Requires a free AsapChat account. The chat shows only on the domain set as the shop address in your AsapChat panel. |
 | Type | Tag |
-| Categories | wybierz z listy w edytorze, maks. 3. Szukaj: `CHAT`, `PERSONALIZATION` |
+| Categories | dokładnie dwie wartości z listy w edytorze: `CHAT` i `PERSONALIZATION` |
 | Brand name | AsapChat |
-| Icon / thumbnail | znak AsapChat (biały dymek na fioletowym tle `#6543f0`), PNG, kwadrat, min. 64 x 64 px, maks. 50 KB. Wklejasz w edytorze, trafia do `template.tpl` |
+| Icon / thumbnail | znak AsapChat (biały dymek na fioletowym tle `#6543f0`), PNG, kwadrat, min. 64 x 64 px, maks. 50 KB. Plik robisz sam ze znaku z `docs/assets/asapchat-logo-white.svg` (sam dymek, bez napisu) na kwadratowym fioletowym tle. Wklejasz w edytorze, trafia do `template.tpl` |
 | Agree to Community Template Gallery Terms of Service | zaznaczone (wymagane) |
 
 Wydawca: AsapCommerce. W galerii jako autor widoczna jest organizacja GitHub `asapdevs-it`.
@@ -22,7 +22,7 @@ Etykiety pól tagu, teksty pomocy i komunikaty błędów: specyfikacja, punkt 4.
 
 ## 2. README.md po angielsku
 
-README w katalogu głównym zastępujemy wersją angielską dla użytkowników (issue 6). Obecny polski README dla deweloperów przenosimy do `docs/README-dev.md`.
+README w katalogu głównym zastępujemy wersją angielską dla użytkowników (zadanie 06). Obecny polski README dla deweloperów przenosimy do `docs/README-dev.md`.
 
 ```
 # AsapChat for Google Tag Manager
@@ -32,7 +32,7 @@ Published by AsapCommerce.
 
 ## Setup
 
-1. In your AsapChat panel open Shop > Plugin and copy the Shop ID and the Widget token.
+1. In your AsapChat panel open your shop settings, click Plugin and copy the Shop ID and the Widget token.
 2. In GTM go to Templates > Search Gallery, find "AsapChat" and add it to your workspace.
 3. Create a new tag from the template. Paste the values into "Shop ID" and "Widget token".
 4. Keep "Load chat" and "Load AsapSearch" ticked, or untick the one you do not need.
@@ -43,6 +43,7 @@ Published by AsapCommerce.
 
 * A free AsapChat account (https://asapchat.io).
 * The chat shows only on the domain set as the shop address in your AsapChat panel.
+* AsapSearch shows results after your products are imported into AsapChat.
 
 ## Look and texts
 
@@ -67,13 +68,15 @@ The template has no delay or exclusion fields. Use GTM triggers:
 ## Data
 
 The widgets send chat messages and search queries typed by visitors to AsapChat.
-Privacy policy: https://asapchat.io/privacy-policy
+Privacy policy: https://asapchat.io/polityka-prywatnosci
 Terms: https://asapchat.io/regulamin
 
 ## Support
 
-<support address>
+TODO(support address)
 ```
+
+Adres wsparcia podaje właściciel repo, `prz10` (`ONBOARDING-DEV.md`, punkt 7). Zadanie 06 zostawia wiersz `TODO(support address)`, jeśli adresu jeszcze nie ma. Zadanie 07 nie może być zamknięte, dopóki ten wiersz istnieje.
 
 ## 3. Pliki wymagane w katalogu głównym repo
 
@@ -86,7 +89,8 @@ Terms: https://asapchat.io/regulamin
 
 - [ ] Repo `asapdevs-it/asapchat-gtm-template` jest publiczne, gałąź domyślna `main`.
 - [ ] Jedno repo = jeden szablon.
-- [ ] `sha` w `metadata.yaml` to pełny sha commita, w którym `template.tpl` ma zgłaszaną treść.
+- [ ] `sha` w `metadata.yaml` to pełny sha commita z `main`, w którym `template.tpl` ma zgłaszaną treść (zasada: `AGENTS.md`, reguła 6).
+- [ ] W `README.md` nie ma wiersza `TODO(support address)`.
 - [ ] Jedno uprawnienie: `inject_script` dla `https://panel.asapchat.io/api/w/*`.
 - [ ] Sam szablon nie zbiera danych osobowych.
 - [ ] Nazwa i opis nie wprowadzają w błąd, brak cudzych marek.
@@ -108,9 +112,9 @@ Ryzyko: galeria może odrzucić zgłoszenie także z innego powodu. Poprawiamy w
 
 1. Przejrzyj pliki i historię commitów: żadnych tokenów, żadnych danych klientów, żadnych treści wewnętrznych.
 2. Sprawdź, że `metadata.yaml` ma aktualny `sha`.
-3. Wejdź na https://tagmanager.google.com/gallery/ , zaloguj się kontem Google wydawcy (`docs/accounts.md`), wybierz zgłoszenie szablonu i podaj adres repo.
+3. Ten krok wykonuje właściciel repo (`prz10`): wejdź na https://tagmanager.google.com/gallery/ , zaloguj się kontem Google wydawcy (`docs/accounts.md`), wybierz zgłoszenie szablonu i podaj adres repo. Deweloper kończy na kroku 2 i oznacza issue zadania 07 komentarzem „ready for owner”.
 4. Google sprawdza repo automatycznie i ręcznie. Wynik przychodzi mailem na konto Google.
-5. Po akceptacji szablon jest widoczny w galerii. Aktualizacja: nowy commit `template.tpl` + nowy wpis w `metadata.yaml`. Użytkownicy widzą w GTM informację o dostępnej aktualizacji.
+5. Po akceptacji szablon jest widoczny w galerii. Aktualizacja: zmiana `template.tpl` przez PR, potem jednolinijkowy PR z nowym wpisem w `metadata.yaml` (sha commita z `main`). Użytkownicy widzą w GTM informację o dostępnej aktualizacji.
 
 ## 7. Czas przeglądu
 

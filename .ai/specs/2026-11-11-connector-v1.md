@@ -8,7 +8,7 @@ To repo jest publiczne. Nie wpisuj tu tokenów, danych klientów ani niczego wew
 
 Osoba, która ma na stronie Google Tag Managera, dodaje czat AsapChat i wyszukiwarkę AsapSearch bez wklejania kodu. Wybiera szablon z galerii, wpisuje ID sklepu i token widgetu, publikuje kontener.
 
-Szablon robi jedną rzecz: ładuje loader AsapChat. Loader sam dokłada czat i wyszukiwarkę z aktualnymi ustawieniami sklepu. Kontrakt loadera: `docs/CONNECT-API.md`, punkt 6. Loader jest częścią usługi AsapChat. W tym repo go nie zmieniasz.
+Szablon robi jedną rzecz: ładuje loader AsapChat. Loader sam dokłada czat i wyszukiwarkę z aktualnymi ustawieniami sklepu. Kontrakt loadera: `docs/CONNECT-API.md`, sekcja „Loader”. Loader jest częścią usługi AsapChat. W tym repo go nie zmieniasz.
 
 ## 2. Słownik
 
@@ -33,20 +33,20 @@ Makieta: `docs/mockups/template.html`. Ekran pól rysuje GTM. Nie da się go ost
 
 Etykiety, teksty pomocy i komunikaty błędów są po angielsku, bo galeria jest globalna. Wpisuj je dokładnie tak jak w tabelach, znak po znaku.
 
-| Etykieta (EN) | Nazwa | Typ | Walidacja w definicji pola | Domyślnie | Widoczne |
-|---|---|---|---|---|---|
-| Shop ID | `shopId` | TEXT | `NON_EMPTY`, `REGEX` `^[1-9][0-9]*$` | puste | zawsze |
-| Widget token | `token` | TEXT | `NON_EMPTY`, `REGEX` `^[A-Za-z0-9._~-]+$` | puste | zawsze |
-| Load chat | `chatEnabled` | CHECKBOX | brak | zaznaczone | zawsze |
-| Load AsapSearch | `searchEnabled` | CHECKBOX | brak | zaznaczone | zawsze |
-| Allow add to cart from search | `cartEnabled` | CHECKBOX | brak | zaznaczone | tylko gdy „Load AsapSearch” jest zaznaczone (`enablingConditions`: `searchEnabled` równe `true`) |
+| Etykieta (EN) | Nazwa | Typ | Walidacja w definicji pola | Podpowiedź w pustym polu (`valueHint`) | Domyślnie | Widoczne |
+|---|---|---|---|---|---|---|
+| Shop ID | `shopId` | TEXT | `NON_EMPTY`, `REGEX` `^[1-9][0-9]*$` | `e.g. 1284` | puste | zawsze |
+| Widget token | `token` | TEXT | `NON_EMPTY`, `REGEX` `^[A-Za-z0-9._~-]+$` | `e.g. 9f2c41d7a0b35e6688c1d4f7a2b90e13` | puste | zawsze |
+| Load chat | `chatEnabled` | CHECKBOX | brak | brak | zaznaczone | zawsze |
+| Load AsapSearch | `searchEnabled` | CHECKBOX | brak | brak | zaznaczone | zawsze |
+| Allow add to cart from search | `cartEnabled` | CHECKBOX | brak | brak | zaznaczone | tylko gdy „Load AsapSearch” jest zaznaczone (`enablingConditions`: `searchEnabled` równe `true`) |
 
 Teksty pomocy i błędów:
 
 | Pole | Tekst pomocy (EN) | Komunikat błędu (EN) |
 |---|---|---|
-| Shop ID | Copy it from your AsapChat panel: Shop > Plugin. | Shop ID is a number, for example 1284. |
-| Widget token | The public widget token. You will find it next to the Shop ID. | Paste the widget token from your AsapChat panel: Shop > Plugin. |
+| Shop ID | Copy it from your AsapChat panel: shop settings > Plugin. | Shop ID is a number, for example 1284. |
+| Widget token | The public widget token. You will find it next to the Shop ID. | Paste the widget token from your AsapChat panel: shop settings > Plugin. |
 | Load chat | The chat shows only on the domain set as the shop address in your AsapChat panel. | brak |
 | Load AsapSearch | Product search for your shop. | brak |
 | Allow add to cart from search | Visitors can add products to the cart straight from the search results. | brak |
@@ -57,7 +57,7 @@ Reguły:
 
 1. ID sklepu to dodatnia liczba całkowita. Bez zera na początku, bez minusa, bez kropki.
 2. Token nie może być pusty. Dozwolone znaki: litery `A-Z`, `a-z`, cyfry, `.`, `_`, `~`, `-`. Spacja, cudzysłów, `<`, `&` są błędem.
-3. Oba pola przycinasz ze spacji na końcach (`trim`), bo użytkownik je wkleja.
+3. Walidator pola (`REGEX`) nie dopuszcza spacji, także na końcach: GTM nie pozwoli zapisać tagu z wklejoną wartością ze spacją i pokaże komunikat błędu. To zamierzone. Kod tagu mimo to przycina oba pola (`trim`) jako drugie zabezpieczenie: wartość może przyjść ze zmiennej GTM, której walidator pola nie sprawdza.
 4. Kod tagu sprawdza te same reguły jeszcze raz (punkt 5). Powód: w pole można wstawić zmienną GTM, a jej wartość znamy dopiero na stronie.
 5. „Allow add to cart from search” jest opcjonalne. Ma znaczenie tylko wtedy, gdy ładuje się wyszukiwarka.
 
@@ -129,7 +129,7 @@ To jedyne uprawnienie. Bez `access_globals`, bez `logging`.
 
 Sandboxed JavaScript nie ma `setTimeout`. `callLater` odkłada kod tylko do następnego kroku, nie o podany czas. Dlatego szablon nie ma pola opóźnienia. Wykluczeń też nie dublujemy, bo GTM ma je wbudowane.
 
-Ta instrukcja trafia do README po angielsku (issue 6):
+Ta instrukcja trafia do README po angielsku (zadanie 06):
 
 **Opóźnienie czatu o X sekund**
 
@@ -154,7 +154,7 @@ Dwa tagi z tego samego szablonu. Pierwszy: tylko „Load AsapSearch”, reguła 
 
 ## 8. Domena sklepu
 
-Czat pojawia się tylko na domenie ustawionej jako adres sklepu w panelu AsapChat. Na innej domenie czatu nie ma, nawet gdy tag ma status „Succeeded”.
+Czat pojawia się tylko na domenie ustawionej jako adres sklepu w panelu AsapChat albo na domenie połączonej wtyczką AsapChat. Na innej domenie czatu nie ma, nawet gdy tag ma status „Succeeded”. W tekstach dla użytkownika szablonu zostaje prostsze zdanie o adresie sklepu z panelu.
 
 Ta informacja jest w trzech miejscach: w tekście pomocy pola „Load chat”, w README i w opisie w galerii.
 
@@ -191,7 +191,7 @@ Lista testów. Baza adresu: `https://panel.asapchat.io/api/w/1284.js?t=abc123`. 
 | 6 | `shopId` = `sklep-12`, potem `0`, `-5`, `12.5`, `012` | jak w teście 5, dla każdej wartości |
 | 7 | `token` pusty | jak w teście 5 |
 | 8 | `token` = `abc 123`, potem `abc&x=1`, `<script>` | jak w teście 5 |
-| 9 | `shopId` = ` 1284 `, `token` = ` abc123 ` (spacje na końcach) | adres = baza, bez spacji |
+| 9 | `shopId` = ` 1284 `, `token` = ` abc123 ` (spacje na końcach, podane wprost w `runCode`, tak jak przyszłyby ze zmiennej GTM; walidator pola w testach nie działa) | adres = baza, bez spacji |
 | 10 | atrapa woła `onFailure` zamiast `onSuccess` | `gtmOnFailure`, `gtmOnSuccess` nie wołany |
 | 11 | dowolny poprawny zestaw | czwarty argument `injectScript` równy adresowi |
 | 12 | chat tak, search tak, cart nie | adres = baza + `&cart=0` |
@@ -206,8 +206,10 @@ Potrzebujesz: kontener testowy GTM, strona testowa i darmowe konto AsapChat (`do
 
 1. Podgląd GTM: tag ma status „Succeeded”, czat widać na stronie.
 2. Odznacz „Load chat”: w zakładce Network adres loadera ma `&chat=0`, czatu nie ma.
-3. Odznacz „Load AsapSearch”: adres ma `&search=0`. Pole „Allow add to cart from search” znika z formularza.
-4. Zaznacz „Load AsapSearch”, odznacz „Allow add to cart from search”: adres ma `&cart=0`, w wynikach wyszukiwania nie ma przycisku koszyka.
+3. Odznacz „Load AsapSearch”: adres loadera w zakładce Network ma `&search=0`. Pole „Allow add to cart from search” znika z formularza.
+4. Zaznacz „Load AsapSearch”, odznacz „Allow add to cart from search”: adres loadera ma `&cart=0`.
+
+   Testy 3 i 4 na stronie testowej kończą się na adresie. Wyszukiwarka potrzebuje zaimportowanych produktów, a strona testowa nie jest sklepem, więc wyników wyszukiwania tam nie ma. Dodatkowo pobierz adres loadera z flagą i bez flagi (`curl`) i zapisz w PR, czy odpowiedź się różni (na koncie bez produktów loader nie dokłada wyszukiwarki, więc różnicy może nie być: wtedy to zapisz). Część wizualną (brak wyszukiwarki, brak przycisku koszyka w wynikach) sprawdza właściciel repo (`prz10`) na prawdziwym sklepie przed wysłaniem zgłoszenia.
 5. Zły token: loader zwraca `404`, tag ma status „Failed”.
 6. Tag z dwiema regułami na tej samej stronie: jeden czat, jedno żądanie loadera.
 7. Strona na domenie innej niż adres sklepu w panelu AsapChat: czatu nie ma. Zapisz status tagu i to, co widać w konsoli.
@@ -230,11 +232,11 @@ Pełna lista: `docs/marketplace-listing.md`. Najważniejsze:
 homepage: "https://asapchat.io"
 documentation: "https://github.com/asapdevs-it/asapchat-gtm-template"
 versions:
-  - sha: <pełny sha commita z template.tpl>
+  - sha: <pełny sha commita z main, w którym template.tpl ma zgłaszaną treść>
     changeNotes: Initial release.
 ```
 
-Nowa wersja szablonu = nowy wpis na górze listy `versions`.
+Zasada `sha`: `AGENTS.md`, reguła 6. W skrócie: do pierwszego zgłoszenia jest jeden wpis z tymczasowym sha (40 zer), prawdziwy sha wpisuje zadanie 07 osobnym jednolinijkowym PR. Po publikacji nowa wersja szablonu = nowy wpis na górze listy `versions`, dodany jednolinijkowym PR po merge'u zmiany.
 
 Ryzyko: galeria może odrzucić zgłoszenie. Poprawiamy wtedy według uwag z maila i zgłaszamy ponownie. To nie wstrzymuje kodu.
 
@@ -249,39 +251,39 @@ Ryzyko: galeria może odrzucić zgłoszenie. Poprawiamy wtedy według uwag z mai
 - Warunki galerii są zaakceptowane w szablonie.
 - Szablon ma ikonę AsapChat.
 - W repo nie ma tokenów, danych klientów ani treści wewnętrznych.
-- Zgłoszenie do galerii jest wysłane.
+- Zgłoszenie do galerii jest wysłane (wysyła właściciel repo z konta wydawcy, deweloper przygotowuje wszystko do tego kroku).
 
 ## 13. Otwarte pytania (nie blokują kodu)
 
 1. Adres dokumentacji w `metadata.yaml`. Na start adres repo. Gdy powstanie strona z instrukcją na asapchat.io, podmieniamy.
-2. Adres wsparcia do README.
+2. Adres wsparcia do README: podaje właściciel repo (`ONBOARDING-DEV.md`, punkt 7). Do tego czasu w README jest wiersz `TODO(support address)`, który zadanie 07 musi usunąć.
 
-## Issues
+## Zadania
 
-Kolejność wykonania. Etykiety z taksonomii w `SDLC.md`. Stare issue 2 („Decyzja o przekazywaniu konfiguracji + zgłoszenia zmian w widgetach”) zamknij bez następcy: szablon używa loadera.
+Kolejność wykonania to prefiks w tytule (`01` do `07`), nie numer GitHuba. Etykiety z taksonomii w `SDLC.md`. Treść zadań jest w issues na GitHubie, poniżej ich kryteria.
 
-### 1. Szkielet repo: LICENSE, metadata.yaml, CI
+### 01 Szkielet repo: LICENSE, metadata.yaml, CI
 
-Zastępuje: #1. Etykiety: `feature`, `skip-qa`, `priority-high`, `risk-low`.
+Etykiety: `feature`, `skip-qa`, `priority-high`, `risk-low`.
 
 - W katalogu głównym jest `LICENSE` z pełną treścią Apache License 2.0.
-- W katalogu głównym jest `metadata.yaml` z `homepage`, `documentation` i jednym wpisem `versions` (sha uzupełnisz w issue 3).
+- W katalogu głównym jest `metadata.yaml` z `homepage`, `documentation` i jednym wpisem `versions` z tymczasowym sha (40 zer). Prawdziwy sha wpisuje zadanie 07.
 - Workflow GitHub Actions sprawdza składnię `metadata.yaml` na każdym PR.
 - Jest pusty `template.tpl` wyeksportowany z edytora (sam szkielet sekcji), żeby kolejne PR miały czytelny diff.
 
-### 2. Pola szablonu, ikona i uprawnienia
+### 02 Pola szablonu, ikona i uprawnienia
 
-Zastępuje: #3. Etykiety: `feature`, `needs-qa`, `priority-high`, `risk-low`.
+Etykiety: `feature`, `needs-qa`, `priority-high`, `risk-low`.
 
-- Szablon ma dokładnie pięć pól z punktu 4. Nazwy, typy, wartości domyślne, angielskie etykiety, teksty pomocy i komunikaty błędów są zgodne z tabelami.
+- Szablon ma dokładnie pięć pól z punktu 4. Nazwy, typy, wartości domyślne, podpowiedzi (`valueHint`), angielskie etykiety, teksty pomocy i komunikaty błędów są zgodne z tabelami.
 - „Allow add to cart from search” widać tylko przy zaznaczonym „Load AsapSearch”.
-- GTM nie pozwala zapisać tagu z „Shop ID” = `sklep-12`, `0` albo pustym, ani z pustym „Widget token” lub tokenem ze spacją w środku.
+- GTM nie pozwala zapisać tagu z „Shop ID” = `sklep-12`, `0` albo pustym, ani z pustym „Widget token” lub tokenem ze spacją (w środku albo na końcu).
 - Jedyne uprawnienie to `inject_script` dla `https://panel.asapchat.io/api/w/*`.
-- Zakładka Info: nazwa, opis, kategorie i ikona według `docs/marketplace-listing.md`, punkt 1. Warunki galerii zaznaczone. Zrzut pól na szerokości 390 px i 1280 px jest w PR.
+- Zakładka Info: nazwa, opis, kategorie i ikona według `docs/marketplace-listing.md`, punkt 1. Ikonę PNG robisz ze znaku w `docs/assets/`. Warunki galerii zaznaczone. Zrzut pól na szerokości 390 px i 1280 px jest w PR.
 
-### 3. Kod tagu: adres loadera i injectScript
+### 03 Kod tagu: adres loadera i injectScript
 
-Zastępuje: #4 (część „kod”). Etykiety: `feature`, `needs-qa`, `priority-high`, `risk-medium`.
+Etykiety: `feature`, `needs-qa`, `priority-high`, `risk-medium`.
 
 - Tag buduje adres według punktu 5. Token przechodzi przez `encodeUriComponent`.
 - Odznaczone „Load chat” dopisuje `&chat=0`, odznaczone „Load AsapSearch” dopisuje `&search=0`.
@@ -289,39 +291,42 @@ Zastępuje: #4 (część „kod”). Etykiety: `feature`, `needs-qa`, `priority-
 - Błędny `shopId`, błędny token albo „Load chat” i „Load AsapSearch” oba odznaczone: `gtmOnFailure`, bez wywołania `injectScript`.
 - `injectScript` dostaje adres jako czwarty argument. Każda ścieżka kodu kończy się `gtmOnSuccess` albo `gtmOnFailure`.
 
-### 4. Testy szablonu w edytorze
+### 04 Testy szablonu w edytorze
 
-Zastępuje: #4 (część „testy”). Etykiety: `feature`, `skip-qa`, `priority-medium`, `risk-low`.
+Etykiety: `feature`, `skip-qa`, `priority-medium`, `risk-low`.
 
 - Sekcja `___TESTS___` zawiera testy 1 do 14 z punktu 9.
 - `injectScript` jest w testach atrapą (`mock`). Żaden test nie robi prawdziwego żądania.
 - „Run tests” pokazuje wszystkie testy na zielono. Zrzut jest w PR.
 - `AGENTS.md`, sekcja „Walidacja”, opisuje aktualny sposób uruchomienia testów.
 
-### 5. Testy ręczne na stronie testowej
+### 05 Testy ręczne na stronie testowej
 
-Zastępuje: #5. Etykiety: `feature`, `needs-qa`, `priority-medium`, `risk-low`.
+Etykiety: `feature`, `needs-qa`, `priority-medium`, `risk-low`.
 
-- Testy ręczne 1 do 11 z punktu 10 są wykonane w kontenerze testowym. Każdy ma zrzut albo jedno zdanie wyniku w PR.
+- Testy ręczne 1 do 11 z punktu 10 są wykonane w kontenerze testowym. Każdy ma zrzut albo jedno zdanie wyniku w PR. Testy 3 i 4 w zakresie opisanym pod listą (adres loadera i odpowiedź z `curl`).
 - Wynik testu 7 (inna domena) jest opisany jednym akapitem po angielsku, gotowym do wklejenia w README.
 - Instrukcja z punktu 7 (Timer, wyjątki) jest sprawdzona krok po kroku. Różnice w nazwach przycisków GTM są poprawione w specyfikacji.
 - Znalezione błędy mają osobne issues z etykietą `bug`.
 
-### 6. README po angielsku
+### 06 README po angielsku
 
-Zastępuje: nowe. Etykiety: `documentation`, `skip-qa`, `priority-medium`, `risk-low`.
+Etykiety: `documentation`, `skip-qa`, `priority-medium`, `risk-low`.
 
 - `README.md` w katalogu głównym jest po angielsku, według szkicu w `docs/marketplace-listing.md`, punkt 2.
-- README mówi, skąd wziąć Shop ID i Widget token (panel AsapChat: Shop > Plugin) i że wygląd zmienia się w panelu, z opóźnieniem do 5 minut.
+- README mówi, skąd wziąć Shop ID i Widget token (panel AsapChat: shop settings > Plugin) i że wygląd zmienia się w panelu, z opóźnieniem do 5 minut.
 - README mówi, że czat pojawia się tylko na domenie ustawionej jako adres sklepu w panelu AsapChat.
 - README ma sekcję o opóźnieniu i wykluczeniach z punktu 7.
-- Obecny polski README dla deweloperów jest przeniesiony do `docs/README-dev.md`.
+- Sekcja „Support” ma adres wsparcia od właściciela repo albo wiersz `TODO(support address)`, gdy adresu jeszcze nie ma.
+- Obecny polski README dla deweloperów jest przeniesiony do `docs/README-dev.md`, a `ONBOARDING-DEV.md` i `AGENTS.md` wskazują ten plik.
 
-### 7. Zgłoszenie do galerii
+### 07 Zgłoszenie do galerii
 
-Zastępuje: #6. Etykiety: `feature`, `skip-qa`, `priority-medium`, `risk-medium`.
+Etykiety: `feature`, `skip-qa`, `priority-medium`, `risk-medium`.
 
-- `metadata.yaml` ma pełny `sha` commita, w którym `template.tpl` ma zgłaszaną treść.
+- `metadata.yaml` ma pełny `sha` commita z `main`, w którym `template.tpl` ma zgłaszaną treść (osobny jednolinijkowy PR po merge'u ostatniej zmiany szablonu).
+- W `README.md` nie ma wiersza `TODO(support address)`.
 - Checklisty z `docs/marketplace-listing.md`, punkty 3 i 4, są odhaczone w issue.
 - Pliki i historia commitów są przejrzane: bez tokenów, bez danych klientów, bez treści wewnętrznych.
-- Zgłoszenie jest wysłane z konta Google wydawcy (AsapCommerce). Data zgłoszenia jest wpisana w issue.
+- Issue jest przypisane do `prz10` z komentarzem „ready for owner”. Na tym kończy się praca dewelopera.
+- Właściciel repo wysyła zgłoszenie z konta Google wydawcy i wpisuje datę zgłoszenia w issue. Część wizualną testów ręcznych 3 i 4 sprawdza przedtem na prawdziwym sklepie.

@@ -14,7 +14,8 @@ To repo jest publiczne. Loginów, haseł, adresów e-mail kont ani identyfikator
 
 1. Załóż własne darmowe konto: https://panel.asapchat.io . Plan Free wystarcza.
 2. Jako adres sklepu podaj adres swojej strony testowej. Czat pojawia się tylko na tej domenie.
-3. Shop ID i Widget token skopiuj z panelu: Sklep → Wtyczka. Te dwie wartości wpisujesz w pola tagu.
+   Wyszukiwarka wymaga zaimportowanych produktów, a strona testowa nie jest sklepem, więc wyników wyszukiwania na niej nie zobaczysz. Jak wtedy wyglądają testy ręczne 3 i 4: spec, punkt 10.
+3. Shop ID i Widget token skopiuj z panelu: edycja sklepu, link „Wtyczka”. Te dwie wartości wpisujesz w pola tagu.
 4. Prawdziwych wartości nie wklejaj do repo. W przykładach używaj `1284` i `abc123`.
 
 ## 3. Repo GitHub
@@ -25,7 +26,9 @@ To repo jest publiczne. Loginów, haseł, adresów e-mail kont ani identyfikator
 
 ## 4. Zgłoszenie do galerii
 
-Zgłoszenie wysyła się z konta Google wydawcy (AsapCommerce), według `docs/marketplace-listing.md`, punkt 6. Na to konto przychodzą maile z przeglądu. Dane tego konta nie są w repo.
+Zgłoszenie wysyła się z konta Google wydawcy (AsapCommerce), według `docs/marketplace-listing.md`, punkt 6. Na to konto przychodzą maile z przeglądu. Dane tego konta nie są w repo i deweloper ich nie dostaje.
+
+Podział pracy: deweloper wykonuje kroki 1 i 2 z punktu 6, odhacza checklisty w issue zadania 07 i przypisuje issue do `prz10` z komentarzem „ready for owner”. Krok 3 (logowanie kontem wydawcy i wysłanie adresu repo) wykonuje właściciel repo (`prz10`) i wpisuje datę zgłoszenia w issue.
 
 ## Checklista
 
