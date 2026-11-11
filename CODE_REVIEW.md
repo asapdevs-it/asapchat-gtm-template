@@ -28,7 +28,7 @@ Plik czyta automatycznie `om-code-review`. Bramka walidacji: `.ai/agentic.config
 
 ## Testy
 
-- Zmiana kodu tagu ma test w sekcji `___TESTS___`. Błąd ma najpierw test, który go odtwarza.
+- Zmiana kodu tagu ma test w sekcji `___TESTS___`. Błąd ma najpierw test, który go odtwarza. Zadanie 03 dodaje kod razem z testem 1 (poprawny adres), pozostałe testy z listy dochodzą w zadaniu 04.
 - „Run tests” jest zielone, zrzut jest w PR.
 - Zmiana pól: zrzut formularza na szerokości 390 px i 1280 px.
 

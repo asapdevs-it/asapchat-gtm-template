@@ -200,16 +200,18 @@ Lista testów. Baza adresu: `https://panel.asapchat.io/api/w/1284.js?t=abc123`. 
 
 Przydatne asercje: `assertApi('injectScript').wasNotCalled()`, `assertApi('gtmOnFailure').wasCalled()`, `assertApi('gtmOnSuccess').wasNotCalled()`.
 
-## 10. Testy ręczne (zrzuty do PR)
+## 10. Testy ręczne (wyniki w komentarzu do issue)
 
-Potrzebujesz: kontener testowy GTM, strona testowa i darmowe konto AsapChat (`docs/accounts.md`).
+Potrzebujesz: kontener testowy GTM, strona testowa i darmowe konto AsapChat (`docs/accounts.md`). Strona testowa to publiczna strona `https`, którą kontrolujesz (np. GitHub Pages), nie `localhost`. Do testu 7 druga strona na innej domenie (drugi darmowy hosting).
+
+Wyniki zapisujesz w komentarzu do issue zadania 05: tabela z 11 testami (numer, wynik, zrzut albo jedno zdanie). PR otwierasz tylko wtedy, gdy trzeba poprawić instrukcję albo spec.
 
 1. Podgląd GTM: tag ma status „Succeeded”, czat widać na stronie.
 2. Odznacz „Load chat”: w zakładce Network adres loadera ma `&chat=0`, czatu nie ma.
 3. Odznacz „Load AsapSearch”: adres loadera w zakładce Network ma `&search=0`. Pole „Allow add to cart from search” znika z formularza.
 4. Zaznacz „Load AsapSearch”, odznacz „Allow add to cart from search”: adres loadera ma `&cart=0`.
 
-   Testy 3 i 4 na stronie testowej kończą się na adresie. Wyszukiwarka potrzebuje zaimportowanych produktów, a strona testowa nie jest sklepem, więc wyników wyszukiwania tam nie ma. Dodatkowo pobierz adres loadera z flagą i bez flagi (`curl`) i zapisz w PR, czy odpowiedź się różni (na koncie bez produktów loader nie dokłada wyszukiwarki, więc różnicy może nie być: wtedy to zapisz). Część wizualną (brak wyszukiwarki, brak przycisku koszyka w wynikach) sprawdza właściciel repo (`prz10`) na prawdziwym sklepie przed wysłaniem zgłoszenia.
+   Testy 3 i 4 na stronie testowej kończą się na adresie. Wyszukiwarka potrzebuje zaimportowanych produktów, a strona testowa nie jest sklepem, więc wyników wyszukiwania tam nie ma. Dodatkowo pobierz adres loadera z flagą i bez flagi (`curl`) i zapisz w komentarzu z wynikami, czy odpowiedź się różni (na koncie bez produktów loader nie dokłada wyszukiwarki, więc różnicy może nie być: wtedy to zapisz). Część wizualną (brak wyszukiwarki, brak przycisku koszyka w wynikach) sprawdza właściciel repo (`prz10`) na prawdziwym sklepie przed wysłaniem zgłoszenia.
 5. Zły token: loader zwraca `404`, tag ma status „Failed”.
 6. Tag z dwiema regułami na tej samej stronie: jeden czat, jedno żądanie loadera.
 7. Strona na domenie innej niż adres sklepu w panelu AsapChat: czatu nie ma. Zapisz status tagu i to, co widać w konsoli.
@@ -245,7 +247,7 @@ Ryzyko: galeria może odrzucić zgłoszenie. Poprawiamy wtedy według uwag z mai
 - `template.tpl` importuje się do czystego kontenera. Ma pięć pól z punktu 4 i jedno uprawnienie z punktu 6.
 - Etykiety, teksty pomocy i komunikaty błędów są po angielsku, identyczne z tabelami w punkcie 4.
 - Testy 1 do 14 z punktu 9 są zielone w edytorze. Zrzut jest w PR.
-- Testy ręczne 1 do 11 z punktu 10 są opisane w PR ze zrzutami.
+- Testy ręczne 1 do 11 z punktu 10 są opisane ze zrzutami w komentarzu do issue zadania 05.
 - W katalogu głównym są `template.tpl`, `metadata.yaml`, `LICENSE` (Apache 2.0) i README po angielsku.
 - README ma instrukcję instalacji, informację o domenie (punkt 8) oraz instrukcję opóźnienia i wykluczeń (punkt 7).
 - Warunki galerii są zaakceptowane w szablonie.
@@ -290,12 +292,13 @@ Etykiety: `feature`, `needs-qa`, `priority-high`, `risk-medium`.
 - `&cart=0` pojawia się tylko wtedy, gdy „Load AsapSearch” jest zaznaczone, a „Allow add to cart from search” odznaczone.
 - Błędny `shopId`, błędny token albo „Load chat” i „Load AsapSearch” oba odznaczone: `gtmOnFailure`, bez wywołania `injectScript`.
 - `injectScript` dostaje adres jako czwarty argument. Każda ścieżka kodu kończy się `gtmOnSuccess` albo `gtmOnFailure`.
+- Sekcja `___TESTS___` ma test 1 z punktu 9 (poprawny adres, `gtmOnSuccess`) z atrapą `injectScript`. „Run tests” jest zielone, zrzut jest w PR. Pozostałe testy dodaje zadanie 04.
 
 ### 04 Testy szablonu w edytorze
 
 Etykiety: `feature`, `skip-qa`, `priority-medium`, `risk-low`.
 
-- Sekcja `___TESTS___` zawiera testy 1 do 14 z punktu 9.
+- Sekcja `___TESTS___` zawiera testy 1 do 14 z punktu 9 (test 1 jest już z zadania 03, tu dochodzą 2 do 14).
 - `injectScript` jest w testach atrapą (`mock`). Żaden test nie robi prawdziwego żądania.
 - „Run tests” pokazuje wszystkie testy na zielono. Zrzut jest w PR.
 - `AGENTS.md`, sekcja „Walidacja”, opisuje aktualny sposób uruchomienia testów.
@@ -304,8 +307,8 @@ Etykiety: `feature`, `skip-qa`, `priority-medium`, `risk-low`.
 
 Etykiety: `feature`, `needs-qa`, `priority-medium`, `risk-low`.
 
-- Testy ręczne 1 do 11 z punktu 10 są wykonane w kontenerze testowym. Każdy ma zrzut albo jedno zdanie wyniku w PR. Testy 3 i 4 w zakresie opisanym pod listą (adres loadera i odpowiedź z `curl`).
-- Wynik testu 7 (inna domena) jest opisany jednym akapitem po angielsku, gotowym do wklejenia w README.
+- Testy ręczne 1 do 11 z punktu 10 są wykonane w kontenerze testowym. Wyniki są w komentarzu do issue: tabela, każdy test ma zrzut albo jedno zdanie wyniku. PR powstaje tylko wtedy, gdy instrukcja albo spec wymagają poprawek. Testy 3 i 4 w zakresie opisanym pod listą (adres loadera i odpowiedź z `curl`).
+- Wynik testu 7 (inna domena) jest opisany w tym samym komentarzu jednym akapitem po angielsku, gotowym do wklejenia w README (zadanie 06 bierze go stamtąd).
 - Instrukcja z punktu 7 (Timer, wyjątki) jest sprawdzona krok po kroku. Różnice w nazwach przycisków GTM są poprawione w specyfikacji.
 - Znalezione błędy mają osobne issues z etykietą `bug`.
 

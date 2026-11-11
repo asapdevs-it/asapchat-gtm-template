@@ -34,11 +34,12 @@ npx skills add https://github.com/open-mercato/skills.git --skill '*'
 
 1. Zadania mają w tytule prefiks `01` do `07`. To jest kolejność wykonania. Numer GitHuba (`#N`) jej nie oznacza. Bierzesz zadanie o najniższym prefiksie, które nie ma etykiety `in-progress` i którego zależności (sekcja „Zależności” w issue) są zamknięte. Gdy dokumenty mówią „zadanie 03”, chodzi o prefiks w tytule.
 2. Powiedz agentowi: `/om-fix <numer GitHuba>` (małe zadanie) albo `/om-auto-create-pr <numer GitHuba>` (większe). Agent przypisze issue do Ciebie, doda `in-progress`, zrobi gałąź, zmiany i PR.
+   Podział pracy: `template.tpl` zmieniasz Ty, w edytorze szablonów GTM, i eksportujesz plik do repo (zadania 01 do 04). Agent zajmuje się plikami repo (`metadata.yaml`, CI, dokumenty, README), commitem i PR. Agent nie pisze `template.tpl` od zera.
 3. Przeczytaj cały diff, zanim poprosisz o review. Agent myli się pewnym tonem. Ty odpowiadasz za zmianę.
 4. Bramka walidacji (komendy z `.ai/agentic.config.json`) musi przejść lokalnie.
-5. PR do `main`. Każdy PR zatwierdza `prz10` (właściciel kodu, wymóg ochrony gałęzi). Wcześniej możesz puścić `/om-auto-review-pr <numer PR>`.
-6. PR z `needs-qa` czeka na `qa-approved`. QA robi drugi deweloper: importuje `template.tpl` z gałęzi PR do swojego kontenera testowego GTM, uruchamia „Run tests”, sprawdza zmianę w podglądzie na stronie testowej i dołącza zrzuty.
-7. Merge przez squash (robi go GitHub, więc commit na `main` jest podpisany). W opisie PR wpisz `Closes #N` z numerem GitHuba: tylko angielskie słowo zamyka issue automatycznie.
+5. PR do `main`. Każdy PR zatwierdza `prz10` (właściciel repo). To zasada zespołu: gałąź `main` nie jest chroniona technicznie, więc pilnujesz jej sam. Wcześniej możesz puścić `/om-auto-review-pr <numer PR>`.
+6. PR z `needs-qa` czeka na `qa-approved`. QA robi drugi deweloper: nad wtyczkami pracują `jakubix2000` i `WanSpi`, QA robi ten, kto nie pisał PR. Importuje `template.tpl` z gałęzi PR do swojego kontenera testowego GTM, uruchamia „Run tests”, sprawdza zmianę w podglądzie na stronie testowej i dołącza zrzuty. Gdy drugi deweloper nie może tego zrobić w dwa dni robocze, QA robi `prz10`. Przy `risk-low` i `risk-medium` możesz też zrobić QA sam (self-QA z `SDLC.md`: dowód w komentarzu PR, etykiety `qa-approved` i `qa-self-verified`). Przy `risk-high` nigdy.
+7. Merge przez squash. W opisie PR wpisz `Closes #N` z numerem GitHuba: tylko angielskie słowo zamyka issue automatycznie.
 
 ## 5. Zasady, których nie łamiemy
 
