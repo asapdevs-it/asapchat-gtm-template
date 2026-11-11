@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Makieta: GTM, konfiguracja tagu AsapChat</title>
+<style>
+.mk-gtm{--g-blue:#1a73e8;--g-text:#202124;--g-muted:#5f6368;--g-line:#dadce0;--g-bg:#f1f3f4;--g-red:#d93025;container-type:inline-size;font:14px/1.5 Roboto,"Helvetica Neue",Arial,sans-serif;color:var(--g-text);background:var(--g-bg);border:1px solid var(--g-line);border-radius:6px;overflow:hidden;text-align:left}
+.mk-gtm *{box-sizing:border-box}
+.mk-gtm .mk-gtm-radio,.mk-gtm .mk-gtm-cb{position:absolute;opacity:0;pointer-events:none}
+.mk-gtm .mk-gtm-switcher{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:8px 10px;background:#fff;border-bottom:1px solid var(--g-line);font-size:13px}
+.mk-gtm .mk-gtm-switcher span{color:var(--g-muted);margin-right:4px}
+.mk-gtm .mk-gtm-switcher label{padding:4px 10px;border:1px solid var(--g-line);border-radius:999px;cursor:pointer;background:#fff}
+.mk-gtm #mk-gtm-s1:checked ~ .mk-gtm-switcher label[for="mk-gtm-s1"],
+.mk-gtm #mk-gtm-s2:checked ~ .mk-gtm-switcher label[for="mk-gtm-s2"],
+.mk-gtm #mk-gtm-s3:checked ~ .mk-gtm-switcher label[for="mk-gtm-s3"],
+.mk-gtm #mk-gtm-s4:checked ~ .mk-gtm-switcher label[for="mk-gtm-s4"]{background:var(--g-blue);border-color:var(--g-blue);color:#fff}
+.mk-gtm .mk-gtm-radio:focus-visible ~ .mk-gtm-switcher{outline:2px solid var(--g-blue);outline-offset:-2px}
+.mk-gtm .mk-gtm-top{display:flex;align-items:center;gap:12px;background:#fff;padding:10px 16px;border-bottom:1px solid var(--g-line)}
+.mk-gtm .mk-gtm-x{font-size:20px;color:var(--g-muted);line-height:1}
+.mk-gtm .mk-gtm-name{font-size:18px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mk-gtm .mk-gtm-save{background:var(--g-blue);color:#fff;border-radius:4px;padding:6px 20px;font-weight:500;font-size:14px}
+.mk-gtm .mk-gtm-wrap{padding:20px 16px 28px;max-width:760px;margin:0 auto}
+.mk-gtm .mk-gtm-card{background:#fff;border-radius:8px;box-shadow:0 1px 2px rgba(60,64,67,.3),0 1px 3px 1px rgba(60,64,67,.15);padding:20px 24px;margin-bottom:16px}
+.mk-gtm .mk-gtm-card h3{font-size:16px;font-weight:400;margin:0 0 14px;color:var(--g-text)}
+.mk-gtm .mk-gtm-type{display:flex;gap:12px;align-items:center;padding-bottom:14px;margin-bottom:14px;border-bottom:1px solid var(--g-line);min-width:0}
+.mk-gtm .mk-gtm-type > div{min-width:0}
+.mk-gtm .mk-gtm-logo{width:40px;height:40px;border-radius:8px;background:#6543f0;display:flex;align-items:center;justify-content:center;flex:none}
+.mk-gtm .mk-gtm-logo svg{width:22px;height:26px;display:block}
+.mk-gtm .mk-gtm-type small{display:block;color:var(--g-muted);font-size:12px}
+.mk-gtm .mk-gtm-perm{margin-left:auto;font-size:12px;color:var(--g-blue);white-space:nowrap}
+.mk-gtm .mk-gtm-f{margin-bottom:16px}
+.mk-gtm .mk-gtm-lab{display:block;font-size:12px;color:var(--g-muted);margin-bottom:4px}
+.mk-gtm .mk-gtm-in{display:flex;align-items:center;height:36px;border:1px solid var(--g-line);border-radius:4px;padding:0 10px;max-width:420px;font:13px ui-monospace,Menlo,Consolas,monospace;background:#fff;overflow:hidden;white-space:nowrap}
+.mk-gtm .mk-gtm-in.mk-gtm-ph{color:#9aa0a6}
+.mk-gtm .mk-gtm-in.mk-gtm-bad{border-color:var(--g-red)}
+.mk-gtm .mk-gtm-help{font-size:12px;color:var(--g-muted);margin-top:4px}
+.mk-gtm .mk-gtm-errtxt{font-size:12px;color:var(--g-red);margin-top:4px}
+.mk-gtm .mk-gtm-chk{display:flex;gap:10px;align-items:center;cursor:pointer;margin-bottom:12px}
+.mk-gtm .mk-gtm-chk i{width:18px;height:18px;border:2px solid var(--g-muted);border-radius:2px;flex:none;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:13px;color:#fff;line-height:1}
+.mk-gtm .mk-gtm-cb:checked + .mk-gtm-chk i{background:var(--g-blue);border-color:var(--g-blue)}
+.mk-gtm .mk-gtm-cb:checked + .mk-gtm-chk i::after{content:"\2713"}
+.mk-gtm .mk-gtm-cb:focus-visible + .mk-gtm-chk i{outline:2px solid var(--g-blue);outline-offset:2px}
+.mk-gtm .mk-gtm-chkhelp{margin:-8px 0 12px 28px}
+.mk-gtm .mk-gtm-sub{display:none;margin-left:28px}
+.mk-gtm .mk-gtm-srch:checked ~ .mk-gtm-sub{display:block}
+.mk-gtm .mk-gtm-trig{display:flex;gap:12px;align-items:center;margin-bottom:12px}
+.mk-gtm .mk-gtm-trig:last-child{margin-bottom:0}
+.mk-gtm .mk-gtm-eye{width:36px;height:36px;border-radius:50%;background:#e8f0fe;color:var(--g-blue);display:flex;align-items:center;justify-content:center;flex:none;font-size:16px}
+.mk-gtm .mk-gtm-eye.mk-gtm-exc{background:#fce8e6;color:var(--g-red)}
+.mk-gtm .mk-gtm-sep{font-size:12px;color:var(--g-muted);text-transform:uppercase;letter-spacing:.04em;margin:14px 0 10px}
+.mk-gtm .mk-gtm-state{display:none}
+.mk-gtm #mk-gtm-s1:checked ~ .mk-gtm-wrap .mk-gtm-st1,
+.mk-gtm #mk-gtm-s2:checked ~ .mk-gtm-wrap .mk-gtm-st2,
+.mk-gtm #mk-gtm-s3:checked ~ .mk-gtm-wrap .mk-gtm-st3,
+.mk-gtm #mk-gtm-s4:checked ~ .mk-gtm-wrap .mk-gtm-st4{display:block}
+.mk-gtm .mk-gtm-note{background:#e8f0fe;border-radius:8px;padding:12px 16px;font-size:13px;color:#174ea6;margin-bottom:12px}
+.mk-gtm .mk-gtm-list{margin:0;padding-left:18px;font-size:13px;color:var(--g-muted);overflow-wrap:anywhere}
+.mk-gtm .mk-gtm-list b{color:var(--g-text);font-weight:500}
+@container (max-width:520px){
+.mk-gtm .mk-gtm-card{padding:16px 14px}
+.mk-gtm .mk-gtm-wrap{padding:14px 10px 22px}
+.mk-gtm .mk-gtm-perm{display:none}
+.mk-gtm .mk-gtm-name{font-size:16px}
+}
+</style>
+</head>
+<body>
+<div class="mk-gtm">
+  <input class="mk-gtm-radio" type="radio" name="mk-gtm-state" id="mk-gtm-s1" checked>
+  <input class="mk-gtm-radio" type="radio" name="mk-gtm-state" id="mk-gtm-s2">
+  <input class="mk-gtm-radio" type="radio" name="mk-gtm-state" id="mk-gtm-s3">
+  <input class="mk-gtm-radio" type="radio" name="mk-gtm-state" id="mk-gtm-s4">
+  <div class="mk-gtm-switcher">
+    <span>Stan makiety:</span>
+    <label for="mk-gtm-s1">Wypełniony tag</label>
+    <label for="mk-gtm-s2">Błąd walidacji</label>
+    <label for="mk-gtm-s3">Opóźnienie i wykluczenia</label>
+    <label for="mk-gtm-s4">Uprawnienia szablonu</label>
+  </div>
+  <div class="mk-gtm-top">
+    <span class="mk-gtm-x">×</span>
+    <span class="mk-gtm-name">AsapChat, wszystkie strony</span>
+    <span class="mk-gtm-save">Zapisz</span>
+  </div>
+  <div class="mk-gtm-wrap">
+
+    <!-- STAN 1: wypełniony -->
+    <div class="mk-gtm-state mk-gtm-st1">
+      <div class="mk-gtm-card">
+        <h3>Konfiguracja tagu</h3>
+        <div class="mk-gtm-type"><span class="mk-gtm-logo"><svg viewBox="0 0 44 52" aria-hidden="true"><path d="M4.87352 51.9875L6.50379 33.8734L20.4517 41.6625L4.87352 51.9875Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M44 21.7369C44 33.7419 34.268 43.4739 22.2631 43.4739C10.2581 43.4739 0.526131 33.7419 0.526131 21.7369C0.526131 9.73196 10.2581 0 22.2631 0C34.268 0 44 9.73196 44 21.7369ZM25.7898 36.8657C24.6022 37.1593 23.3603 37.3151 22.0819 37.3151C13.5784 37.3151 6.68493 30.4216 6.68493 21.9181C6.68493 13.4145 13.5784 6.52107 22.0819 6.52107C30.5854 6.52107 37.4789 13.4145 37.4789 21.9181C37.4789 27.2722 34.7461 31.988 30.5992 34.7468L31.1816 39.3932L25.7898 36.8657Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M13.7494 21.7361C15.2501 21.7361 16.4666 20.5196 16.4666 19.019C16.4666 18.013 15.9198 17.1347 15.1073 16.665C17.2667 16.7128 19.0025 18.4782 19.0025 20.6491C19.0025 22.85 17.2183 24.6342 15.0174 24.6342C12.8165 24.6342 11.0323 22.85 11.0323 20.6491C11.0323 20.3416 11.0672 20.0422 11.1331 19.7547C11.4539 20.8979 12.5038 21.7361 13.7494 21.7361Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M28.2407 21.7361C29.7413 21.7361 30.9578 20.5196 30.9578 19.019C30.9578 18.013 30.4111 17.1347 29.5986 16.665C31.758 16.7128 33.4938 18.4782 33.4938 20.6491C33.4938 22.85 31.7096 24.6342 29.5087 24.6342C27.3078 24.6342 25.5236 22.85 25.5236 20.6491C25.5236 20.3416 25.5584 20.0422 25.6244 19.7547C25.9452 20.8979 26.995 21.7361 28.2407 21.7361Z" fill="white"/></svg></span><div>AsapChat: AI Chat and Product Search<small>Szablon z galerii społeczności · AsapCommerce</small></div><span class="mk-gtm-perm">1 uprawnienie</span></div>
+        <div class="mk-gtm-f">
+          <span class="mk-gtm-lab">Shop ID *</span>
+          <div class="mk-gtm-in">1284</div>
+          <div class="mk-gtm-help">Copy it from your AsapChat panel: Shop &gt; Plugin.</div>
+        </div>
+        <div class="mk-gtm-f">
+          <span class="mk-gtm-lab">Widget token *</span>
+          <div class="mk-gtm-in">9f2c41d7a0b35e6688c1d4f7a2b90e13</div>
+          <div class="mk-gtm-help">The public widget token. You will find it next to the Shop ID.</div>
+        </div>
+        <input class="mk-gtm-cb" type="checkbox" id="mk-gtm-chat" checked>
+        <label class="mk-gtm-chk" for="mk-gtm-chat"><i></i>Load chat</label>
+        <div class="mk-gtm-help mk-gtm-chkhelp">The chat shows only on the domain set as the shop address in your AsapChat panel.</div>
+        <input class="mk-gtm-cb mk-gtm-srch" type="checkbox" id="mk-gtm-search" checked>
+        <label class="mk-gtm-chk" for="mk-gtm-search"><i></i>Load AsapSearch</label>
+        <div class="mk-gtm-help mk-gtm-chkhelp">Product search for your shop.</div>
+        <div class="mk-gtm-sub">
+          <input class="mk-gtm-cb" type="checkbox" id="mk-gtm-cart" checked>
+          <label class="mk-gtm-chk" for="mk-gtm-cart"><i></i>Allow add to cart from search</label>
+          <div class="mk-gtm-help mk-gtm-chkhelp">Visitors can add products to the cart straight from the search results.</div>
+        </div>
+      </div>
+      <div class="mk-gtm-note">Pola są po angielsku, bo galeria jest globalna. Wygląd, nazwę asystenta i powitania zmieniasz w panelu AsapChat. Zmiana jest na stronie po maksymalnie 5 minutach. Odznacz „Load AsapSearch”, a pole „Allow add to cart from search” zniknie.</div>
+      <div class="mk-gtm-card">
+        <h3>Reguły</h3>
+        <div class="mk-gtm-trig"><span class="mk-gtm-eye">◉</span><div>All Pages<br><span class="mk-gtm-help">Wyświetlenie strony</span></div></div>
+      </div>
+    </div>
+
+    <!-- STAN 2: błąd walidacji -->
+    <div class="mk-gtm-state mk-gtm-st2">
+      <div class="mk-gtm-card">
+        <h3>Konfiguracja tagu</h3>
+        <div class="mk-gtm-type"><span class="mk-gtm-logo"><svg viewBox="0 0 44 52" aria-hidden="true"><path d="M4.87352 51.9875L6.50379 33.8734L20.4517 41.6625L4.87352 51.9875Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M44 21.7369C44 33.7419 34.268 43.4739 22.2631 43.4739C10.2581 43.4739 0.526131 33.7419 0.526131 21.7369C0.526131 9.73196 10.2581 0 22.2631 0C34.268 0 44 9.73196 44 21.7369ZM25.7898 36.8657C24.6022 37.1593 23.3603 37.3151 22.0819 37.3151C13.5784 37.3151 6.68493 30.4216 6.68493 21.9181C6.68493 13.4145 13.5784 6.52107 22.0819 6.52107C30.5854 6.52107 37.4789 13.4145 37.4789 21.9181C37.4789 27.2722 34.7461 31.988 30.5992 34.7468L31.1816 39.3932L25.7898 36.8657Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M13.7494 21.7361C15.2501 21.7361 16.4666 20.5196 16.4666 19.019C16.4666 18.013 15.9198 17.1347 15.1073 16.665C17.2667 16.7128 19.0025 18.4782 19.0025 20.6491C19.0025 22.85 17.2183 24.6342 15.0174 24.6342C12.8165 24.6342 11.0323 22.85 11.0323 20.6491C11.0323 20.3416 11.0672 20.0422 11.1331 19.7547C11.4539 20.8979 12.5038 21.7361 13.7494 21.7361Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M28.2407 21.7361C29.7413 21.7361 30.9578 20.5196 30.9578 19.019C30.9578 18.013 30.4111 17.1347 29.5986 16.665C31.758 16.7128 33.4938 18.4782 33.4938 20.6491C33.4938 22.85 31.7096 24.6342 29.5087 24.6342C27.3078 24.6342 25.5236 22.85 25.5236 20.6491C25.5236 20.3416 25.5584 20.0422 25.6244 19.7547C25.9452 20.8979 26.995 21.7361 28.2407 21.7361Z" fill="white"/></svg></span><div>AsapChat: AI Chat and Product Search<small>Szablon z galerii społeczności · AsapCommerce</small></div></div>
+        <div class="mk-gtm-f">
+          <span class="mk-gtm-lab">Shop ID *</span>
+          <div class="mk-gtm-in mk-gtm-bad">sklep-12</div>
+          <div class="mk-gtm-errtxt">Shop ID is a number, for example 1284.</div>
+        </div>
+        <div class="mk-gtm-f">
+          <span class="mk-gtm-lab">Widget token *</span>
+          <div class="mk-gtm-in mk-gtm-bad mk-gtm-ph">e.g. 9f2c41d7a0b35e6688c1d4f7a2b90e13</div>
+          <div class="mk-gtm-errtxt">Paste the widget token from your AsapChat panel: Shop &gt; Plugin.</div>
+        </div>
+        <input class="mk-gtm-cb" type="checkbox" id="mk-gtm-chat2" checked>
+        <label class="mk-gtm-chk" for="mk-gtm-chat2"><i></i>Load chat</label>
+        <div class="mk-gtm-help mk-gtm-chkhelp">The chat shows only on the domain set as the shop address in your AsapChat panel.</div>
+        <input class="mk-gtm-cb mk-gtm-srch" type="checkbox" id="mk-gtm-search2" checked>
+        <label class="mk-gtm-chk" for="mk-gtm-search2"><i></i>Load AsapSearch</label>
+        <div class="mk-gtm-help mk-gtm-chkhelp">Product search for your shop.</div>
+        <div class="mk-gtm-sub">
+          <input class="mk-gtm-cb" type="checkbox" id="mk-gtm-cart2" checked>
+          <label class="mk-gtm-chk" for="mk-gtm-cart2"><i></i>Allow add to cart from search</label>
+          <div class="mk-gtm-help mk-gtm-chkhelp">Visitors can add products to the cart straight from the search results.</div>
+        </div>
+      </div>
+      <div class="mk-gtm-note">Walidację robią reguły pól szablonu. GTM nie zapisze tagu z błędną wartością. Kod tagu sprawdza wartości jeszcze raz i przy błędzie kończy się statusem „Failed”.</div>
+    </div>
+
+    <!-- STAN 3: opóźnienie i wykluczenia robi GTM, nie szablon -->
+    <div class="mk-gtm-state mk-gtm-st3">
+      <div class="mk-gtm-note">Szablon nie ma pól opóźnienia ani wykluczeń. Robisz to regułami GTM, tak jak dla każdego innego tagu.</div>
+      <div class="mk-gtm-card">
+        <h3>Reguły</h3>
+        <div class="mk-gtm-trig"><span class="mk-gtm-eye">◷</span><div>AsapChat, po 5 sekundach<br><span class="mk-gtm-help">Licznik czasu · interwał 5000 ms · limit 1 · Page Path nie zawiera /cart</span></div></div>
+        <div class="mk-gtm-sep">Wyjątki</div>
+        <div class="mk-gtm-trig"><span class="mk-gtm-eye mk-gtm-exc">◉</span><div>Koszyk<br><span class="mk-gtm-help">Wyświetlenie strony · Page Path zawiera /cart (działa tylko z regułą „Wyświetlenie strony”)</span></div></div>
+      </div>
+      <div class="mk-gtm-card">
+        <h3>Jak to ustawić</h3>
+        <ul class="mk-gtm-list">
+          <li><b>Opóźnienie:</b> zamiast All Pages dodaj regułę typu „Licznik czasu”. Interwał w milisekundach, limit 1.</li>
+          <li><b>Wykluczenia bez opóźnienia:</b> dodaj wyjątek typu „Wyświetlenie strony” z warunkiem na Page Path.</li>
+          <li><b>Wykluczenia z opóźnieniem:</b> warunek na Page Path wpisz w samej regule „Licznik czasu”. Wyjątek typu „Wyświetlenie strony” nie zatrzyma licznika.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- STAN 4: uprawnienia -->
+    <div class="mk-gtm-state mk-gtm-st4">
+      <div class="mk-gtm-card">
+        <h3>Uprawnienia szablonu (to widzi użytkownik przed dodaniem z galerii)</h3>
+        <ul class="mk-gtm-list">
+          <li><b>Wstrzykuje skrypty</b> z adresu: https://panel.asapchat.io/api/w/*</li>
+        </ul>
+      </div>
+      <div class="mk-gtm-note">Jedno uprawnienie i nic więcej. Krótka lista ułatwia przegląd w galerii i budzi zaufanie osób, które instalują tag.</div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
