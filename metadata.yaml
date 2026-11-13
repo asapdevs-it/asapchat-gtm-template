@@ -1,0 +1,6 @@
+homepage: "https://asapchat.io"
+documentation: "https://github.com/asapdevs-it/asapchat-gtm-template"
+versions:
+  # Temporary sha until the first gallery submission. Task 07 sets the full sha of the main commit (AGENTS.md, rule 6).
+  - sha: "0000000000000000000000000000000000000000"
+    changeNotes: Initial release.
